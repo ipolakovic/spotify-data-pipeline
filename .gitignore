@@ -18,7 +18,6 @@ venv/
 *.tfstate.backup
 
 # IDE
-.vscode/
 .idea/
 .DS_Store
 
