@@ -1,0 +1,17 @@
+# AWS
+boto3==1.35.76
+botocore==1.35.76
+
+# Data processing
+pandas==2.2.3
+requests==2.32.3
+
+# Environment
+python-dotenv==1.0.1
+
+# Testing
+pytest==8.3.4
+
+# Code quality
+black==24.10.0
+ruff==0.8.4
