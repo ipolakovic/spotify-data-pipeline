@@ -260,6 +260,91 @@ class SpotifyClient:
         return all_tracks
     
 
+    def get_recent_plays_since(self, after_timestamp: int) -> List[Dict]:
+        """
+        Fetch recently played tracks after a specific timestamp.
+        
+        This is used for incremental fetches - only get new plays since last run.
+        
+        Args:
+            after_timestamp: Unix timestamp in milliseconds. Fetch plays after this time.
+            
+        Returns:
+            List of new track play events since the timestamp
+            
+        Raises:
+            ValueError: If not authenticated
+        """
+        if not self.sp:
+            raise ValueError("Not authenticated. Call authenticate() first.")
+        
+        logger.info(f"Fetching plays after timestamp: {after_timestamp}")
+        
+        all_new_tracks = []
+        current_after = after_timestamp
+        page = 1
+        
+        while True:
+            try:
+                # Fetch batch using 'after' parameter
+                params = {'limit': 50, 'after': current_after}
+                
+                logger.info(f"Incremental fetch page {page}: after={current_after}")
+                results = self.sp.current_user_recently_played(**params)
+                tracks_data = results.get('items', [])
+                
+                if not tracks_data:
+                    logger.info("No new tracks found")
+                    break
+                
+                # Transform tracks
+                tracks = []
+                for item in tracks_data:
+                    track_data = {
+                        'played_at': item['played_at'],
+                        'played_at_timestamp': self._parse_timestamp(item['played_at']),
+                        'track_id': item['track']['id'],
+                        'track_name': item['track']['name'],
+                        'artist_id': item['track']['artists'][0]['id'],
+                        'artist_name': item['track']['artists'][0]['name'],
+                        'album_id': item['track']['album']['id'],
+                        'album_name': item['track']['album']['name'],
+                        'release_date': item['track']['album']['release_date'],
+                        'duration_ms': item['track']['duration_ms'],
+                        'popularity': item['track']['popularity'],
+                    }
+                    tracks.append(track_data)
+                
+                all_new_tracks.extend(tracks)
+                logger.info(f"Page {page}: Fetched {len(tracks)} new tracks. Total: {len(all_new_tracks)}")
+                
+                # If we got less than 50, we've fetched everything new
+                if len(tracks) < 50:
+                    logger.info("Fetched all new tracks")
+                    break
+                
+                # Update timestamp for next page (use newest track from this batch)
+                current_after = tracks[0]['played_at_timestamp']
+                page += 1
+                
+                # Safety check
+                if page > 10:
+                    logger.warning("Reached 10 pages of new data, stopping")
+                    break
+                    
+            except Exception as e:
+                logger.error(f"Error fetching incremental data on page {page}: {str(e)}")
+                if all_new_tracks:
+                    logger.info(f"Returning {len(all_new_tracks)} tracks fetched before error")
+                    break
+                else:
+                    raise
+        
+        # Sort chronologically (oldest first)
+        all_new_tracks.sort(key=lambda x: x['played_at_timestamp'])
+        
+        logger.info(f"Incremental fetch complete: {len(all_new_tracks)} new tracks")
+        return all_new_tracks
 
 if __name__ == "__main__":
     """
@@ -311,3 +396,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"\n❌ TEST FAILED: {str(e)}")
         raise
+

@@ -100,3 +100,72 @@ def get_oldest_timestamp(tracks: List[Dict]) -> Optional[int]:
         return None
     
     return min(track['played_at_timestamp'] for track in tracks)
+
+
+
+def save_state(last_timestamp: int, state_dir: str = "data") -> str:
+    """
+    Save the last processed timestamp to a state file.
+    
+    This enables incremental fetches - we only fetch plays after this timestamp.
+    
+    Args:
+        last_timestamp: Unix timestamp in milliseconds of the last processed play
+        state_dir: Directory to save state file
+        
+    Returns:
+        Path to state file
+    """
+    Path(state_dir).mkdir(parents=True, exist_ok=True)
+    
+    state_file = os.path.join(state_dir, "last_run_state.json")
+    
+    state = {
+        "last_processed_timestamp": last_timestamp,
+        "last_processed_at": datetime.fromtimestamp(last_timestamp / 1000).isoformat(),
+        "updated_at": datetime.now().isoformat()
+    }
+    
+    with open(state_file, 'w', encoding='utf-8') as f:
+        json.dump(state, f, indent=2)
+    
+    logger.info(f"Saved state: last_timestamp={last_timestamp}")
+    return state_file
+
+
+def load_state(state_dir: str = "data") -> Optional[int]:
+    """
+    Load the last processed timestamp from state file.
+    
+    Args:
+        state_dir: Directory where state file is stored
+        
+    Returns:
+        Last processed timestamp in milliseconds, or None if no state exists
+    """
+    state_file = os.path.join(state_dir, "last_run_state.json")
+    
+    if not os.path.exists(state_file):
+        logger.info("No previous state found - this is the first run")
+        return None
+    
+    with open(state_file, 'r', encoding='utf-8') as f:
+        state = json.load(f)
+    
+    last_timestamp = state.get('last_processed_timestamp')
+    logger.info(f"Loaded state: last_timestamp={last_timestamp}")
+    return last_timestamp
+
+
+def is_first_run(state_dir: str = "data") -> bool:
+    """
+    Check if this is the first run (no state file exists).
+    
+    Args:
+        state_dir: Directory where state file would be stored
+        
+    Returns:
+        True if first run, False otherwise
+    """
+    state_file = os.path.join(state_dir, "last_run_state.json")
+    return not os.path.exists(state_file)
