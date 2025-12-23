@@ -25,3 +25,4 @@ venv/
 dbt-project/target/
 dbt-project/dbt_packages/
 dbt-project/logs/
+data/
