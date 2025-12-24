@@ -5,8 +5,9 @@ import json
 import os
 from pathlib import Path
 from typing import List, Dict, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
+import boto3
 
 logger = logging.getLogger(__name__)
 
@@ -30,16 +31,19 @@ def save_tracks_to_json(
     # Create output directory if it doesn't exist
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     
+    # Generate timestamp once
+    now = datetime.now(timezone.utc)
+    
     # Generate filename with timestamp if not provided
     if filename is None:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        timestamp = now.strftime("%Y%m%d_%H%M%S")
         filename = f"spotify_plays_{timestamp}.json"
     
     filepath = os.path.join(output_dir, filename)
     
     # Prepare data with metadata
     data = {
-        "fetched_at": datetime.now().isoformat(),
+        "fetched_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "track_count": len(tracks),
         "tracks": tracks
     }
@@ -122,8 +126,8 @@ def save_state(last_timestamp: int, state_dir: str = "data") -> str:
     
     state = {
         "last_processed_timestamp": last_timestamp,
-        "last_processed_at": datetime.fromtimestamp(last_timestamp / 1000).isoformat(),
-        "updated_at": datetime.now().isoformat()
+        "last_processed_at": datetime.fromtimestamp(last_timestamp / 1000, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "updated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     }
     
     with open(state_file, 'w', encoding='utf-8') as f:
@@ -169,3 +173,109 @@ def is_first_run(state_dir: str = "data") -> bool:
     """
     state_file = os.path.join(state_dir, "last_run_state.json")
     return not os.path.exists(state_file)
+
+
+def save_tracks_to_s3(
+    tracks: List[Dict],
+    bucket_name: str,
+    prefix: str = "raw"
+) -> str:
+    """
+    Save tracks to S3 with date partitioning.
+    
+    Args:
+        tracks: List of track dictionaries
+        bucket_name: S3 bucket name
+        prefix: S3 key prefix (e.g., 'raw', 'processed')
+        
+    Returns:
+        S3 key where data was saved
+    """
+    if not tracks:
+        logger.warning("No tracks to save")
+        return ""
+    
+    # Create S3 client
+    s3 = boto3.client('s3')
+    
+    # Generate timestamp once
+    now = datetime.now(timezone.utc)
+    timestamp = now.strftime("%Y%m%d_%H%M%S")
+    s3_key = f"{prefix}/year={now.year}/month={now.month:02d}/day={now.day:02d}/spotify_plays_{timestamp}.json"
+    
+    # Prepare data with metadata
+    data = {
+        "fetched_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "track_count": len(tracks),
+        "tracks": tracks
+    }
+    
+    # Upload to S3
+    s3.put_object(
+        Bucket=bucket_name,
+        Key=s3_key,
+        Body=json.dumps(data, indent=2, ensure_ascii=False),
+        ContentType='application/json'
+    )
+    
+    logger.info(f"Saved {len(tracks)} tracks to s3://{bucket_name}/{s3_key}")
+    return s3_key
+
+def save_state_to_s3(
+    last_timestamp: int,
+    bucket_name: str,
+    key: str = "state/last_run_state.json"
+) -> None:
+    """
+    Save pipeline state to S3.
+    
+    Args:
+        last_timestamp: Unix timestamp in milliseconds of last processed play
+        bucket_name: S3 bucket name
+        key: S3 key for state file
+    """
+    s3 = boto3.client('s3')
+    
+    state = {
+        "last_processed_timestamp": last_timestamp,
+        "last_processed_at": datetime.fromtimestamp(last_timestamp / 1000, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "updated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    }
+    
+    s3.put_object(
+        Bucket=bucket_name,
+        Key=key,
+        Body=json.dumps(state, indent=2),
+        ContentType='application/json'
+    )
+    
+    logger.info(f"Saved state to s3://{bucket_name}/{key}: last_timestamp={last_timestamp}")
+
+def load_state_from_s3(
+    bucket_name: str,
+    key: str = "state/last_run_state.json"
+) -> Optional[int]:
+    """
+    Load pipeline state from S3.
+    
+    Args:
+        bucket_name: S3 bucket name
+        key: S3 key for state file
+        
+    Returns:
+        Last processed timestamp in milliseconds, or None if no state exists
+    """
+    s3 = boto3.client('s3')
+    
+    try:
+        response = s3.get_object(Bucket=bucket_name, Key=key)
+        state = json.loads(response['Body'].read())
+        last_timestamp = state.get('last_processed_timestamp')
+        logger.info(f"Loaded state from S3: last_timestamp={last_timestamp}")
+        return last_timestamp
+    except s3.exceptions.NoSuchKey:
+        logger.info("No previous state found in S3 - this is the first run")
+        return None
+    except Exception as e:
+        logger.error(f"Error loading state from S3: {str(e)}")
+        raise
