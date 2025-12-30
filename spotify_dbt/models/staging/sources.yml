@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw
+    database: SPOTIFY_DATA
+    schema: RAW
+    tables:
+      - name: raw_plays
+        description: "Raw JSON blobs from Spotify API - one row per Lambda execution"
+      - name: raw_artists
+        description: "Raw JSON blobs with artist details - one row per Lambda execution"

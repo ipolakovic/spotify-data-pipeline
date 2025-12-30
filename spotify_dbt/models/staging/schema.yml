@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_plays
+    description: "Flattened and deduplicated play events"
+    columns:
+      - name: track_id
+        description: "Spotify track identifier"
+        tests:
+          - not_null
+      - name: played_at
+        description: "Timestamp when track was played"
+        tests:
+          - not_null
+      - name: artist_id
+        description: "Spotify artist identifier"
+        tests:
+          - not_null
+
+  - name: stg_artists
+    description: "Flattened and deduplicated artist details"
+    columns:
+      - name: artist_id
+        description: "Spotify artist identifier"
+        tests:
+          - unique
+          - not_null
+      - name: artist_name
+        description: "Artist display name"
+        tests:
+          - not_null

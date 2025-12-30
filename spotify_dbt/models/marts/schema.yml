@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: dim_artists
+    description: "Artist dimension - one row per artist"
+    columns:
+      - name: artist_id
+        description: "Spotify artist identifier"
+        tests:
+          - unique
+          - not_null
+      - name: artist_name
+        tests:
+          - not_null
+
+  - name: fct_plays
+    description: "Play events enriched with artist details"
+    columns:
+      - name: played_at
+        tests:
+          - not_null
+      - name: track_id
+        tests:
+          - not_null
+      - name: artist_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_artists')
+              field: artist_id
