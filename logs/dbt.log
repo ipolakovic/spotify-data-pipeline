@@ -1,0 +1,254 @@
+[0m08:12:05.240620 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x103570050>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107204bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106f69390>]}
+
+
+============================== 08:12:05.243746 | e875ae37-b5b0-48c7-8a47-03720bf22a9d ==============================
+[0m08:12:05.243746 [info ] [MainThread]: Running with dbt=1.11.2
+[0m08:12:05.244098 [debug] [MainThread]: running dbt with arguments {'fail_fast': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'send_anonymous_usage_stats': 'True', 'profiles_dir': '/Users/ivan/.dbt', 'no_print': 'None', 'debug': 'False', 'indirect_selection': 'eager', 'cache_selected_only': 'False', 'partial_parse': 'True', 'use_colors': 'True', 'warn_error': 'None', 'target_path': 'None', 'static_parser': 'True', 'log_path': 'logs', 'write_json': 'True', 'quiet': 'False', 'empty': 'None', 'invocation_command': 'dbt init spotify_dbt', 'log_format': 'default', 'version_check': 'True', 'log_cache_events': 'False', 'use_experimental_parser': 'False', 'introspect': 'True'}
+[0m08:12:05.253670 [info ] [MainThread]: Creating dbt configuration folder at /Users/ivan/.dbt
+[0m08:12:05.254610 [debug] [MainThread]: Starter project path: /Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/include/starter_project
+[0m08:12:05.257993 [info ] [MainThread]: 
+Your new dbt project "spotify_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m08:12:05.258214 [info ] [MainThread]: Setting up your profile.
+[0m08:12:18.367691 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m08:12:18.368414 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m08:12:18.368810 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m08:14:36.428481 [error] [MainThread]: Encountered an error:
+
+[0m08:14:36.435236 [error] [MainThread]: Traceback (most recent call last):
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/cli/requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/cli/main.py", line 483, in init
+    results = task.run()
+              ^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 346, in run
+    self.setup_profile(profile_name)
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 262, in setup_profile
+    self.create_profile_from_target(adapter, profile_name=profile_name)
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 179, in create_profile_from_target
+    self.create_profile_from_profile_template(profile_template, profile_name)
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 163, in create_profile_from_profile_template
+    target = self.generate_target_from_input(prompts, initial_target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 129, in generate_target_from_input
+    target[key] = click.prompt(
+                  ^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/click/termui.py", line 171, in prompt
+    value = prompt_func(prompt)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/click/termui.py", line 154, in prompt_func
+    raise Abort() from None
+click.exceptions.Abort
+
+[0m08:14:36.820750 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": false, "command_wall_clock_time": 151.63678, "process_in_blocks": "0", "process_kernel_time": 0.232434, "process_mem_max_rss": "165134336", "process_out_blocks": "0", "process_user_time": 1.106752}
+[0m08:14:36.825930 [debug] [MainThread]: Command `dbt init` failed at 08:14:36.825575 after 151.64 seconds
+[0m08:14:36.827878 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1072369d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1208c0c10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x100c9aad0>]}
+[0m08:14:36.829187 [debug] [MainThread]: Flushing usage events
+[0m08:14:37.358740 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m08:14:40.143279 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111dcca10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111e379d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111e62050>]}
+
+
+============================== 08:14:40.145741 | f0624cc5-a5fe-46b1-bd38-d2f9fca52cc4 ==============================
+[0m08:14:40.145741 [info ] [MainThread]: Running with dbt=1.11.2
+[0m08:14:40.146068 [debug] [MainThread]: running dbt with arguments {'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'quiet': 'False', 'version_check': 'True', 'static_parser': 'True', 'partial_parse': 'True', 'fail_fast': 'False', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'empty': 'None', 'warn_error': 'None', 'no_print': 'None', 'target_path': 'None', 'introspect': 'True', 'printer_width': '80', 'profiles_dir': '/Users/ivan/.dbt', 'cache_selected_only': 'False', 'log_cache_events': 'False', 'log_path': 'logs', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt init spotify_dbt', 'log_format': 'default', 'write_json': 'True', 'debug': 'False'}
+[0m08:14:40.156129 [info ] [MainThread]: A project called spotify_dbt already exists here.
+[0m08:14:40.157340 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 0.050463334, "process_in_blocks": "0", "process_kernel_time": 0.095286, "process_mem_max_rss": "107560960", "process_out_blocks": "0", "process_user_time": 0.655424}
+[0m08:14:40.157594 [debug] [MainThread]: Command `dbt init` succeeded at 08:14:40.157544 after 0.05 seconds
+[0m08:14:40.157788 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111e61f50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111e60690>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x102d76d90>]}
+[0m08:14:40.157981 [debug] [MainThread]: Flushing usage events
+[0m08:14:40.593889 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m08:15:52.591224 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10224ce50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106ba5390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106ba5a50>]}
+
+
+============================== 08:15:52.594354 | d5bc83bd-e2be-4e74-a6a5-a3151fa981d9 ==============================
+[0m08:15:52.594354 [info ] [MainThread]: Running with dbt=1.11.2
+[0m08:15:52.594690 [debug] [MainThread]: running dbt with arguments {'log_path': 'logs', 'static_parser': 'True', 'introspect': 'True', 'version_check': 'True', 'warn_error': 'None', 'printer_width': '80', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'log_format': 'default', 'write_json': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'use_colors': 'True', 'empty': 'None', 'log_cache_events': 'False', 'no_print': 'None', 'indirect_selection': 'eager', 'invocation_command': 'dbt init spotify_dbt', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'quiet': 'False', 'profiles_dir': '/Users/ivan/.dbt', 'target_path': 'None'}
+[0m08:15:52.606748 [debug] [MainThread]: Starter project path: /Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/include/starter_project
+[0m08:15:52.610370 [info ] [MainThread]: 
+Your new dbt project "spotify_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m08:15:52.610607 [info ] [MainThread]: Setting up your profile.
+[0m08:15:55.170707 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m08:15:55.170989 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m08:15:55.171165 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m08:22:07.926088 [error] [MainThread]: Encountered an error:
+
+[0m08:22:07.931437 [error] [MainThread]: Traceback (most recent call last):
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/cli/requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/cli/main.py", line 483, in init
+    results = task.run()
+              ^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 346, in run
+    self.setup_profile(profile_name)
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 262, in setup_profile
+    self.create_profile_from_target(adapter, profile_name=profile_name)
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 179, in create_profile_from_target
+    self.create_profile_from_profile_template(profile_template, profile_name)
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 163, in create_profile_from_profile_template
+    target = self.generate_target_from_input(prompts, initial_target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/task/init.py", line 113, in generate_target_from_input
+    numeric_choice = click.prompt(prompt_msg, type=click.INT)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/click/termui.py", line 171, in prompt
+    value = prompt_func(prompt)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/click/termui.py", line 154, in prompt_func
+    raise Abort() from None
+click.exceptions.Abort
+
+[0m08:22:07.935452 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": false, "command_wall_clock_time": 375.3908, "process_in_blocks": "0", "process_kernel_time": 0.208846, "process_mem_max_rss": "165707776", "process_out_blocks": "0", "process_user_time": 0.995114}
+[0m08:22:07.939849 [debug] [MainThread]: Command `dbt init` failed at 08:22:07.939311 after 375.39 seconds
+[0m08:22:07.940805 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106ba4c50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106ba5d90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1077423d0>]}
+[0m08:22:07.941183 [debug] [MainThread]: Flushing usage events
+[0m08:22:09.452524 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m08:22:12.382592 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bed0b10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bf61050>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bf61750>]}
+
+
+============================== 08:22:12.385608 | c9b47736-ef06-4661-b3d0-9f6ee844ff47 ==============================
+[0m08:22:12.385608 [info ] [MainThread]: Running with dbt=1.11.2
+[0m08:22:12.385976 [debug] [MainThread]: running dbt with arguments {'warn_error': 'None', 'log_cache_events': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'write_json': 'True', 'profiles_dir': '/Users/ivan/.dbt', 'target_path': 'None', 'empty': 'None', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'cache_selected_only': 'False', 'log_path': 'logs', 'static_parser': 'True', 'quiet': 'False', 'printer_width': '80', 'use_colors': 'True', 'debug': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'fail_fast': 'False', 'log_format': 'default', 'introspect': 'True', 'version_check': 'True', 'no_print': 'None', 'invocation_command': 'dbt init spotify_dbt'}
+[0m08:22:12.397432 [info ] [MainThread]: A project called spotify_dbt already exists here.
+[0m08:22:12.398887 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 0.05926246, "process_in_blocks": "0", "process_kernel_time": 0.120897, "process_mem_max_rss": "108199936", "process_out_blocks": "0", "process_user_time": 0.727264}
+[0m08:22:12.399231 [debug] [MainThread]: Command `dbt init` succeeded at 08:22:12.399173 after 0.06 seconds
+[0m08:22:12.399456 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bf60990>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104b22850>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10ba87490>]}
+[0m08:22:12.399687 [debug] [MainThread]: Flushing usage events
+[0m08:22:12.843230 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m08:22:18.163599 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1066d1010>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1066d15d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106836a10>]}
+
+
+============================== 08:22:18.166343 | 3f367acb-e41b-4d11-807d-c7ba829dbf62 ==============================
+[0m08:22:18.166343 [info ] [MainThread]: Running with dbt=1.11.2
+[0m08:22:18.166668 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'warn_error': 'None', 'profiles_dir': '/Users/ivan/.dbt', 'log_format': 'default', 'target_path': 'None', 'use_experimental_parser': 'False', 'cache_selected_only': 'False', 'quiet': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'printer_width': '80', 'no_print': 'None', 'log_path': 'logs', 'indirect_selection': 'eager', 'introspect': 'True', 'debug': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_cache_events': 'False', 'send_anonymous_usage_stats': 'True', 'empty': 'None', 'invocation_command': 'dbt init spotify_dbt', 'version_check': 'True', 'write_json': 'True', 'use_colors': 'True'}
+[0m08:22:18.176157 [debug] [MainThread]: Starter project path: /Users/ivan/projects/spotify-data-pipeline/venv/lib/python3.11/site-packages/dbt/include/starter_project
+[0m08:22:18.179777 [info ] [MainThread]: 
+Your new dbt project "spotify_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m08:22:18.179989 [info ] [MainThread]: Setting up your profile.
+[0m08:22:21.317880 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m08:22:21.318160 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m08:22:21.318339 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m08:23:47.467017 [info ] [MainThread]: Profile spotify_dbt written to /Users/ivan/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m08:23:47.478753 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 89.35158, "process_in_blocks": "0", "process_kernel_time": 0.195492, "process_mem_max_rss": "164872192", "process_out_blocks": "0", "process_user_time": 0.950129}
+[0m08:23:47.503044 [debug] [MainThread]: Command `dbt init` succeeded at 08:23:47.502631 after 89.38 seconds
+[0m08:23:47.503987 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106837090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x113084890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1008aad90>]}
+[0m08:23:47.504478 [debug] [MainThread]: Flushing usage events
+[0m08:23:48.986379 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m08:23:57.383273 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10637d5d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1067406d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106751ad0>]}
+
+
+============================== 08:23:57.385987 | 6a196322-e026-47c1-a9b9-2d344e926642 ==============================
+[0m08:23:57.385987 [info ] [MainThread]: Running with dbt=1.11.2
+[0m08:23:57.386326 [debug] [MainThread]: running dbt with arguments {'quiet': 'False', 'empty': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'partial_parse': 'True', 'use_colors': 'True', 'profiles_dir': '/Users/ivan/.dbt', 'invocation_command': 'dbt debug', 'send_anonymous_usage_stats': 'True', 'version_check': 'True', 'write_json': 'True', 'static_parser': 'True', 'cache_selected_only': 'False', 'introspect': 'True', 'target_path': 'None', 'printer_width': '80', 'no_print': 'None', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'log_path': 'logs', 'log_format': 'default', 'warn_error': 'None', 'fail_fast': 'False', 'debug': 'False'}
+[0m08:23:57.396433 [info ] [MainThread]: dbt version: 1.11.2
+[0m08:23:57.396683 [info ] [MainThread]: python version: 3.11.7
+[0m08:23:57.396878 [info ] [MainThread]: python path: /Users/ivan/projects/spotify-data-pipeline/venv/bin/python
+[0m08:23:57.397036 [info ] [MainThread]: os info: macOS-15.6-arm64-arm-64bit
+[0m08:23:57.807566 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m08:23:57.807841 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m08:23:57.808001 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m08:23:57.837053 [info ] [MainThread]: Using profiles dir at /Users/ivan/.dbt
+[0m08:23:57.837283 [info ] [MainThread]: Using profiles.yml file at /Users/ivan/.dbt/profiles.yml
+[0m08:23:57.837459 [info ] [MainThread]: Using dbt_project.yml file at /Users/ivan/projects/spotify-data-pipeline/dbt_project.yml
+[0m08:23:57.837735 [info ] [MainThread]: adapter type: snowflake
+[0m08:23:57.837925 [info ] [MainThread]: adapter version: 1.11.0
+[0m08:23:57.838086 [info ] [MainThread]: Configuration:
+[0m08:23:57.838233 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m08:23:57.838384 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m08:23:57.838543 [info ] [MainThread]: Required dependencies:
+[0m08:23:57.838711 [debug] [MainThread]: Executing "git --help"
+[0m08:23:57.847233 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify tags\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m08:23:57.847837 [debug] [MainThread]: STDERR: "b''"
+[0m08:23:57.848055 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m08:23:57.848240 [info ] [MainThread]: Connection:
+[0m08:23:57.848429 [info ] [MainThread]:   account: OYYTIAG-JH79729
+[0m08:23:57.848568 [info ] [MainThread]:   user: IPOLAKOVIC1989
+[0m08:23:57.848709 [info ] [MainThread]:   database: SPOTIFY_DATA
+[0m08:23:57.848841 [info ] [MainThread]:   warehouse: SPOTIFY_WH
+[0m08:23:57.848980 [info ] [MainThread]:   role: ACCOUNTADMIN
+[0m08:23:57.849109 [info ] [MainThread]:   schema: ANALYTICS
+[0m08:23:57.849236 [info ] [MainThread]:   authenticator: None
+[0m08:23:57.849371 [info ] [MainThread]:   oauth_client_id: None
+[0m08:23:57.849497 [info ] [MainThread]:   query_tag: None
+[0m08:23:57.849628 [info ] [MainThread]:   client_session_keep_alive: False
+[0m08:23:57.849759 [info ] [MainThread]:   host: None
+[0m08:23:57.849885 [info ] [MainThread]:   port: None
+[0m08:23:57.850012 [info ] [MainThread]:   proxy_host: None
+[0m08:23:57.850144 [info ] [MainThread]:   proxy_port: None
+[0m08:23:57.850272 [info ] [MainThread]:   protocol: None
+[0m08:23:57.850397 [info ] [MainThread]:   connect_retries: 1
+[0m08:23:57.850525 [info ] [MainThread]:   connect_timeout: None
+[0m08:23:57.850658 [info ] [MainThread]:   retry_on_database_errors: False
+[0m08:23:57.850783 [info ] [MainThread]:   retry_all: False
+[0m08:23:57.850909 [info ] [MainThread]:   insecure_mode: False
+[0m08:23:57.851035 [info ] [MainThread]:   reuse_connections: True
+[0m08:23:57.851161 [info ] [MainThread]:   s3_stage_vpce_dns_name: None
+[0m08:23:57.851288 [info ] [MainThread]:   platform_detection_timeout_seconds: 0.0
+[0m08:23:57.851587 [info ] [MainThread]: Registered adapter: snowflake=1.11.0
+[0m08:23:57.927514 [debug] [MainThread]: Acquiring new snowflake connection 'debug'
+[0m08:23:57.957845 [debug] [MainThread]: Using snowflake connection "debug"
+[0m08:23:57.958047 [debug] [MainThread]: On debug: select 1 as id
+[0m08:23:57.958194 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m08:23:59.021285 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.063 seconds
+[0m08:23:59.024244 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m08:23:59.024880 [info ] [MainThread]: [31m1 check failed:[0m
+[0m08:23:59.025273 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </Users/ivan/projects/spotify-data-pipeline/dbt_project.yml> not found
+
+[0m08:23:59.032968 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 1.6874096, "process_in_blocks": "0", "process_kernel_time": 0.218795, "process_mem_max_rss": "191217664", "process_out_blocks": "0", "process_user_time": 1.228009}
+[0m08:23:59.033816 [debug] [MainThread]: Command `dbt debug` failed at 08:23:59.033682 after 1.69 seconds
+[0m08:23:59.034358 [debug] [MainThread]: Connection 'debug' was left open.
+[0m08:23:59.034757 [debug] [MainThread]: On debug: Close
+[0m08:23:59.196944 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1064e6d50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a2e6b90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10637d890>]}
+[0m08:23:59.198377 [debug] [MainThread]: Flushing usage events
+[0m08:23:59.645023 [debug] [MainThread]: An error was encountered while trying to flush usage events
